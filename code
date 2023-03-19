@@ -1,0 +1,42 @@
+
+class Solution
+{
+public:
+    int minSwap(int arr[], int n, int k) {
+        
+        //step 1: counting numbers which are less than or equal to k
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            if(arr[i]<=k){
+                cnt++;
+            }
+        }
+        
+       //now we have to find which subarray has maximum number
+       //of elements which are greater than k
+    
+        //step 2: for that we will make sliding window whose length is cnt
+        int k_window=0;
+        for(int i=0;i<cnt;i++){
+            if(arr[i]<=k){
+                k_window++;
+            }
+        }
+        
+        //step 3: shifting window and finding the most no. of set values(<=k)
+        int ans=k_window;
+        int start_window=0,end_window=cnt;
+        while(end_window<n){
+            if(arr[start_window]<=k){
+                k_window--;
+            }
+            if(arr[end_window]<=k){
+                k_window++;
+            }
+            start_window++;end_window++;
+            ans=max(ans,k_window);
+        }
+        
+        return cnt-ans;
+    }
+};
